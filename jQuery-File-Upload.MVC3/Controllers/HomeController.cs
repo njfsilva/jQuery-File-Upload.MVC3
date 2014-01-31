@@ -129,20 +129,23 @@ namespace jQuery_File_Upload.MVC3.Controllers
             {
                 var file = request.Files[i];
 
-                var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
-
-                file.SaveAs(fullPath);
-
-                statuses.Add(new ViewDataUploadFilesResult()
+                if (file != null)
                 {
-                    name = file.FileName,
-                    size = file.ContentLength,
-                    type = file.ContentType,
-                    url = "/Home/Download/" + file.FileName,
-                    delete_url = "/Home/Delete/" + file.FileName,
-                    thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
-                    delete_type = "GET",
-                });
+                    var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
+
+                    file.SaveAs(fullPath);
+
+                    statuses.Add(new ViewDataUploadFilesResult()
+                    {
+                        name = file.FileName,
+                        size = file.ContentLength,
+                        type = file.ContentType,
+                        url = "/Home/Download/" + file.FileName,
+                        delete_url = "/Home/Delete/" + file.FileName,
+                        thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
+                        delete_type = "GET",
+                    });
+                }
             }
         }
     }

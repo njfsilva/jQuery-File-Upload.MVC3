@@ -47,7 +47,7 @@
             // allowed to be uploaded using this widget:
             maxNumberOfFiles: undefined,
             // The maximum allowed file size:
-            maxFileSize: undefined,
+            maxFileSize: 99999999999999999999999999999999999999999999999999999999999999999999,//undefined,
             // The minimum allowed file size:
             minFileSize: undefined,
             // The regular expression for allowed file types, matches
@@ -57,7 +57,7 @@
             // image is shown, matched against the file type:
             previewSourceFileTypes: /^image\/(gif|jpeg|png)$/,
             // The maximum file size of images that are to be displayed as preview:
-            previewSourceMaxFileSize: 5000000, // 5MB
+            previewSourceMaxFileSize: 99999999999999999999999999999999999999999999999999999999999999999999, // 5MB
             // The maximum width of the preview images:
             previewMaxWidth: 80,
             // The maximum height of the preview images:

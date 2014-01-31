@@ -5,45 +5,37 @@
 
     Html.RequiresCss("Bootstrap/bootstrap.min.css", "Content", 2);
     Html.RequiresCss("Bootstrap/bootstrap-responsive.min.css", "Content", 3);
-    Html.RequiresCss("Bootstrap/bootstrap-image-gallery.min.css", "Content", 4);
+    //Html.RequiresCss("Bootstrap/bootstrap-image-gallery.min.css", "Content", 4);
 
     Html.RequiresCss("FileUpload/jquery.fileupload-ui.css", "Content", 5);
-    
-    
-    Html.RequiresJs("jquery/1.7.1/jquery.min.js", "googleCDN", 1);
-    Html.RequiresJs("jqueryui/1.8.18/jquery-ui.min.js", "googleCDN", 2);
+
+    Html.RequiresJs("jquery-1.11.0.js", "Scripts", 1);
+    Html.RequiresJs("jquery-migrate-1.2.1.js", "Scripts", 2);
+    Html.RequiresJs("jquery-ui-1.8.11.js", "Scripts", 3);
 
     Html.RequiresJs("FileUpload/tmpl.min.js", "Content", 5);
-    Html.RequiresJs("FileUpload/canvas-to-blob.min.js", "Content", 5);
-    Html.RequiresJs("FileUpload/load-image.min.js", "Content", 5);
+    //Html.RequiresJs("FileUpload/canvas-to-blob.min.js", "Content", 5);
+    //Html.RequiresJs("FileUpload/load-image.min.js", "Content", 5);
 
-    Html.RequiresJs("Bootstrap/bootstrap-image-gallery.min.js", "Content", 6);
+    //Html.RequiresJs("Bootstrap/bootstrap-image-gallery.min.js", "Content", 6);
     Html.RequiresJs("Bootstrap/bootstrap.min.js", "Content", 6);
 
     Html.RequiresJs("FileUpload/jquery.iframe-transport.js", "Content", 10);
     Html.RequiresJs("FileUpload/jquery.fileupload.js", "Content", 10);
-    Html.RequiresJs("FileUpload/jquery.fileupload-ip.js", "Content", 20);
+
     Html.RequiresJs("FileUpload/jquery.fileupload-ui.js", "Content", 30);
 
     Html.RequiresJs("FileUpload/locale.js", "Content", 90);
     Html.RequiresJs("FileUpload/main.js", "Content", 99);
+
+    
 }
 
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 
-@*IN ORDER TO USE MVC ACTIONS AS HANDLERS OF AJAX CALLS, USE THE FORM DECLARATION BELOW. (THE ONE COMMENTED OUT)
-IT IS NOT ADVISED SINCE WHEN USING MVC CONTROLLER TO HANDLE REQUESTS ONE CAN'T CONTROL THE maxMessageLength OF THE POST REQUEST
-THIS CASTS THE FUNCTIONALITY OF UPLOADING LARGE FILES USELESS, UNLESS YOU SUCRIFICE THE SECURITY AND ALLOW LARGE 
-POST MESSAGE SIZES SITE-WIDE.
-
-IT IS BETTER TO USE HTTP HANDLER TO PROCESS UPLOAD REQUESTS UNTIL MVC FRAMEWORK PROVIDES WAYS TO SET maxMessageLength ON
-PER ACTION BASIS *@
-
-@*<form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">*@
-
-<form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">
+    <form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="row fileupload-buttonbar">
             <div class="span7">
@@ -78,41 +70,40 @@ PER ACTION BASIS *@
         <div class="fileupload-loading"></div>
         <br>
         <!-- The table listing the files available for upload/download -->
-        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+        <table class="table table-striped"><tbody class="files" data-toggle="filesGallery" data-target="#filesGallery"></tbody></table>
     </form>
     
     <!-- modal-gallery is the modal dialog used for the image gallery -->
-    <div id="modal-gallery" class="modal modal-gallery hide fade">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">&times;</a>
-            <h3 class="modal-title"></h3>
-        </div>
-        <div class="modal-body"><div class="modal-image"></div></div>
-        <div class="modal-footer">
-            <a class="btn btn-primary modal-next">
-                <span>Next</span>
-                <i class="icon-arrow-right icon-white"></i>
-            </a>
-            <a class="btn btn-info modal-prev">
-                <i class="icon-arrow-left icon-white"></i>
-                <span>Previous</span>
-            </a>
-            <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
-                <i class="icon-play icon-white"></i>
-                <span>Slideshow</span>
-            </a>
-            <a class="btn modal-download" target="_blank">
-                <i class="icon-download"></i>
-                <span>Download</span>
-            </a>
-        </div>
+    <div id="filesGallery" class="modal modal-gallery hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
     </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn btn-primary modal-next">
+            <span>Next</span>
+            <i class="icon-arrow-right icon-white"></i>
+        </a>
+        <a class="btn btn-info modal-prev">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Previous</span>
+        </a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+            <i class="icon-play icon-white"></i>
+            <span>Slideshow</span>
+        </a>
+        <a class="btn modal-download" target="_blank">
+            <i class="icon-download"></i>
+            <span>Download</span>
+        </a>
+    </div>
+</div>
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
-        <td class="preview"><span class="fade"></span></td>
         <td class="name"><span>{%=file.name%}</span></td>
         <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
         {% if (file.error) { %}
@@ -149,9 +140,6 @@ PER ACTION BASIS *@
             <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
             <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else { %}
-            <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
-            {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
             </td>

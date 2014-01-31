@@ -19,7 +19,7 @@ $(function () {
     $('#fileupload').fileupload();
 
     $('#fileupload').fileupload('option', {
-            maxFileSize: 500000000,
+            maxFileSize: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999,
             resizeMaxWidth: 1920,
             resizeMaxHeight: 1200
         });

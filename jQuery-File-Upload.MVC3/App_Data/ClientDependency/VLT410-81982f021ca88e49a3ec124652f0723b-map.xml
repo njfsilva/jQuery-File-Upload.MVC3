@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<map>
+  <item key="c0f6a48fc7e1e558a6635e39c39c2b80" file="" compression="" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+      <file name="/Content/Bootstrap/bootstrap.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-responsive.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.css" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.css" />
+    </files>
+  </item>
+  <item key="ef7d45d60ea181697ee34d973dcc0288" file="" compression="" version="1">
+    <files>
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="c0f6a48fc7e1e558a6635e39c39c2b80" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_202109bd8b2344b0be9e65ab39aaf9b9.cdC" compression="gzip" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+      <file name="/Content/Bootstrap/bootstrap.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-responsive.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.css" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.css" />
+    </files>
+  </item>
+  <item key="ef7d45d60ea181697ee34d973dcc0288" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_4944df68a70f4b4fbb5c257e839d20ac.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="77f2ed190bbb31b9238dda3b6de07305" file="" compression="" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+    </files>
+  </item>
+  <item key="77f2ed190bbb31b9238dda3b6de07305" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_eeea57e5339e4f9184eae22fa7bbd600.cdC" compression="gzip" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+    </files>
+  </item>
+  <item key="25e8059c204d9daa148347ae6a60465d" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="25e8059c204d9daa148347ae6a60465d" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_13de0cd7db30425abbd4a6345f50b6df.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="0e4372c63f1e18c0d2a07a21e563b595" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="0e4372c63f1e18c0d2a07a21e563b595" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_02fb47390dfa4cb4a36b8d11487dc69e.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="6887ea2ad76387aceb8ca41592861f57" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="6887ea2ad76387aceb8ca41592861f57" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_9c1c56791f324148ab9ee7b77a46dc11.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="0f81912f69ecc1bbad4d9bbe90776f92" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="0f81912f69ecc1bbad4d9bbe90776f92" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_7fb84a623f484d5bb3bc0bb23f5e3abf.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Scripts/jquery.fileupload.js" />
+      <file name="/Scripts/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ip.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="2a4763983beabde1b983ff70cf771211" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="2a4763983beabde1b983ff70cf771211" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_6887ae5aa2dc4c11a655451e451259d9.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="5673839cf79e4a96a576e7d6e1935fed" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="5673839cf79e4a96a576e7d6e1935fed" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_58bfb7b7659a4275a36e837bb87546b2.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/load-image.min.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="17b25153e42a8261dfce132bbc59beef" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="17b25153e42a8261dfce132bbc59beef" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_a527db89d2774f3394c8d73018f9953d.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/canvas-to-blob.min.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="66490b158f0bf1cf7e366ceb7cef108c" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="66490b158f0bf1cf7e366ceb7cef108c" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_f5a4560c3d4e48da9c637636e4e3aa2e.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="fd48a8cd94547bc0f3a17de833e858af" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="fd48a8cd94547bc0f3a17de833e858af" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_7edb2a9d0da641289f355ff3e5efd169.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/Bootstrap/bootstrap-image-gallery.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="dc5792141d505ad70cd4487dca07a956" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="dc5792141d505ad70cd4487dca07a956" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_84dc315723fe4a599daf2e3634a5b4c6.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="608082ce076d1eb7d040b1ebfb6b3c58" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="608082ce076d1eb7d040b1ebfb6b3c58" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_e2f784264c7541059903674709fcbdba.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/locale.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="5e3406d1445e5bd85d9b0ececa2cfd4f" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+    </files>
+  </item>
+  <item key="5e3406d1445e5bd85d9b0ececa2cfd4f" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_d3825677e0f24cebb1e425264eda585f.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+    </files>
+  </item>
+  <item key="e8611d0044cadf99da03dad1fa5aebf4" file="" compression="" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="e8611d0044cadf99da03dad1fa5aebf4" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_47b354e16ad34ae5b4b4fd4289fe0150.cdJ" compression="gzip" version="1">
+    <files>
+      <file name="/Scripts/jquery-1.11.0.js" />
+      <file name="/Scripts/jquery-migrate-1.2.1.js" />
+      <file name="/Scripts/jquery-ui-1.8.11.js" />
+      <file name="/Content/FileUpload/tmpl.min.js" />
+      <file name="/Content/Bootstrap/bootstrap.min.js" />
+      <file name="/Content/FileUpload/jquery.fileupload.js" />
+      <file name="/Content/FileUpload/jquery.iframe-transport.js" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.js" />
+      <file name="/Content/FileUpload/main.js" />
+    </files>
+  </item>
+  <item key="ae13696be1a7b9177de0547e2aee4005" file="" compression="" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+      <file name="/Content/Bootstrap/bootstrap.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-responsive.min.css" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.css" />
+    </files>
+  </item>
+  <item key="ae13696be1a7b9177de0547e2aee4005" file="C:\Users\nfsilva\Downloads\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3-master\jQuery-File-Upload.MVC3\App_Data\ClientDependency\1_e1f0b226ddce4bf49a9c36961743027e.cdC" compression="gzip" version="1">
+    <files>
+      <file name="/Content/Site.css" />
+      <file name="/Content/Bootstrap/bootstrap.min.css" />
+      <file name="/Content/Bootstrap/bootstrap-responsive.min.css" />
+      <file name="/Content/FileUpload/jquery.fileupload-ui.css" />
+    </files>
+  </item>
+</map>

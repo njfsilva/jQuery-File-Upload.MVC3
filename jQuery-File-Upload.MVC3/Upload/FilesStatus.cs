@@ -43,7 +43,8 @@ namespace jQuery_File_Upload.MVC3.Upload
 
         private bool IsImage(string ext)
         {
-            return ext == ".gif" || ext == ".jpg" || ext == ".png";
+            return true;
+            //return ext == ".gif" || ext == ".jpg" || ext == ".png" || ext == ".patch" || ext == ".txt || ext == ".patch;
         }
 
         private string EncodeFile(string fileName)
