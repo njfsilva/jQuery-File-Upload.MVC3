@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -81,48 +80,51 @@ namespace jQuery_File_Upload.MVC3.Controllers
             return Json(r);
         }
 
-        private string EncodeFile(string fileName)
-        {
-            return Convert.ToBase64String(System.IO.File.ReadAllBytes(fileName));
-        }
+        //private string EncodeFile(string fileName)
+        //{
+        //    return Convert.ToBase64String(System.IO.File.ReadAllBytes(fileName));
+        //}
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
-        //Credit to i-e-b and his ASP.Net uploader for the bulk of the upload helper methods - https://github.com/i-e-b/jQueryFileUpload.Net
+
         private void UploadPartialFile(string fileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
             if (request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
             var file = request.Files[0];
-            var inputStream = file.InputStream;
 
-            var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
-
-            using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+            if (fileName != null)
             {
-                var buffer = new byte[1024];
+                var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
 
-                var l = inputStream.Read(buffer, 0, 1024);
-                while (l > 0)
+                if (System.IO.File.Exists(fullName))
                 {
-                    fs.Write(buffer, 0, l);
-                    l = inputStream.Read(buffer, 0, 1024);
+                    using (var files = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+                    {
+                        file.InputStream.CopyTo(files);
+                    }
                 }
-                fs.Flush();
-                fs.Close();
+                else
+                {
+                    using (var newFile = System.IO.File.Create(fullName))
+                    {
+                        file.InputStream.CopyTo(newFile);
+                    }
+
+                }
+
+                statuses.Add(new ViewDataUploadFilesResult()
+                {
+                    name = fileName,
+                    size = file.ContentLength,
+                    type = file.ContentType,
+                    url = "/Home/Download/" + fileName,
+                    delete_url = "/Home/Delete/" + fileName,
+                    //thumbnail_url = @"data:image/png;base64," + EncodeFile(fullName),
+                    delete_type = "GET",
+                });
             }
-            statuses.Add(new ViewDataUploadFilesResult()
-            {
-                name = fileName,
-                size = file.ContentLength,
-                type = file.ContentType,
-                url = "/Home/Download/" + fileName,
-                delete_url = "/Home/Delete/" + fileName,
-                thumbnail_url = @"data:image/png;base64," + EncodeFile(fullName),
-                delete_type = "GET",
-            });
         }
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
-        //Credit to i-e-b and his ASP.Net uploader for the bulk of the upload helper methods - https://github.com/i-e-b/jQueryFileUpload.Net
+
         private void UploadWholeFile(HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
             for (int i = 0; i < request.Files.Count; i++)
@@ -142,7 +144,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
                         type = file.ContentType,
                         url = "/Home/Download/" + file.FileName,
                         delete_url = "/Home/Delete/" + file.FileName,
-                        thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
+                        //thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
                         delete_type = "GET",
                     });
                 }

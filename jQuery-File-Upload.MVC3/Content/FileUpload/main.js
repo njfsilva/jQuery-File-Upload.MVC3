@@ -19,9 +19,9 @@ $(function () {
     $('#fileupload').fileupload();
 
     $('#fileupload').fileupload('option', {
-            maxFileSize: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999,
+            maxFileSize: 9999999999,
             resizeMaxWidth: 1920,
-            resizeMaxHeight: 1200
-            //,maxChunkSize: 130048 //1024*128 = 128 KB
+            resizeMaxHeight: 1200,
+            maxChunkSize: 1024 * 2048 //2 MB
         });
 });
