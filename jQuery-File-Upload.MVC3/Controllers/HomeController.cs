@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -71,7 +72,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
                     UploadPartialFile(headers["X-File-Name"], Request, statuses);
                 }
 
-                JsonResult result = Json(statuses);
+                var result = Json(statuses);
                 result.ContentType = "text/plain";
 
                 return result;
@@ -89,6 +90,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
         private void UploadPartialFile(string fileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
             if (request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
+
             var file = request.Files[0];
 
             if (fileName != null)
@@ -99,19 +101,19 @@ namespace jQuery_File_Upload.MVC3.Controllers
                 {
                     using (var files = new FileStream(fullName, FileMode.Append, FileAccess.Write))
                     {
-                        file.InputStream.CopyTo(files);
+                        if (file != null) file.InputStream.CopyTo(files);
                     }
                 }
                 else
                 {
                     using (var newFile = System.IO.File.Create(fullName))
                     {
-                        file.InputStream.CopyTo(newFile);
+                        if (file != null) file.InputStream.CopyTo(newFile);
                     }
 
                 }
 
-                statuses.Add(new ViewDataUploadFilesResult()
+                statuses.Add(new ViewDataUploadFilesResult
                 {
                     name = fileName,
                     size = file.ContentLength,

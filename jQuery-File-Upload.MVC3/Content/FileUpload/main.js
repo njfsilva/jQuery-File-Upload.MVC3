@@ -22,6 +22,7 @@ $(function () {
             maxFileSize: 9999999999,
             resizeMaxWidth: 1920,
             resizeMaxHeight: 1200,
-            maxChunkSize: 1024 * 2048 //2 MB
+            maxChunkSize: 1024 * 1024, //512 KB 2 MB
+            singleFileUploads: 10
         });
 });

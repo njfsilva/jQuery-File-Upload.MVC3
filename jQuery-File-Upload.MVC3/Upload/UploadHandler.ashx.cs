@@ -11,17 +11,16 @@ namespace jQuery_File_Upload.MVC3.Upload
     /// </summary>
     public class UploadHandler : IHttpHandler
     {
-        private readonly JavaScriptSerializer js;
+        private readonly JavaScriptSerializer _js;
 
         private string StorageRoot
         {
-            get { return Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Files/")); } //Path should! always end with '/'
+            get { return Path.Combine(HttpContext.Current.Server.MapPath("~/Files/")); } 
         }
 
         public UploadHandler()
         {
-            js = new JavaScriptSerializer();
-            js.MaxJsonLength = 41943040;
+            _js = new JavaScriptSerializer {MaxJsonLength = 41943040};
         }
 
         public bool IsReusable { get { return false; } }
@@ -103,22 +102,14 @@ namespace jQuery_File_Upload.MVC3.Upload
         private void UploadPartialFile(string fileName, HttpContext context, List<FilesStatus> statuses)
         {
             if (context.Request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
-            var inputStream = context.Request.Files[0].InputStream;
+            var fileStreamFromRequest = context.Request.Files[0].InputStream;
             var fullName = StorageRoot + Path.GetFileName(fileName);
 
             using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
             {
-                var buffer = new byte[1024];
-
-                var l = inputStream.Read(buffer, 0, 1024);
-                while (l > 0)
-                {
-                    fs.Write(buffer, 0, l);
-                    l = inputStream.Read(buffer, 0, 1024);
-                }
-                fs.Flush();
-                fs.Close();
+                fileStreamFromRequest.CopyTo(fs);
             }
+
             statuses.Add(new FilesStatus(new FileInfo(fullName)));
         }
 
@@ -133,7 +124,7 @@ namespace jQuery_File_Upload.MVC3.Upload
 
                 file.SaveAs(fullPath);
 
-                string fullName = Path.GetFileName(file.FileName);
+                var fullName = Path.GetFileName(file.FileName);
                 statuses.Add(new FilesStatus(fullName, file.ContentLength, fullPath));
             }
         }
@@ -143,17 +134,14 @@ namespace jQuery_File_Upload.MVC3.Upload
             context.Response.AddHeader("Vary", "Accept");
             try
             {
-                if (context.Request["HTTP_ACCEPT"].Contains("application/json"))
-                    context.Response.ContentType = "application/json";
-                else
-                    context.Response.ContentType = "text/plain";
+                context.Response.ContentType = context.Request["HTTP_ACCEPT"].Contains("application/json") ? "application/json" : "text/plain";
             }
             catch
             {
                 context.Response.ContentType = "text/plain";
             }
 
-            var jsonObj = js.Serialize(statuses.ToArray());
+            var jsonObj = _js.Serialize(statuses.ToArray());
             context.Response.Write(jsonObj);
         }
 
@@ -187,7 +175,7 @@ namespace jQuery_File_Upload.MVC3.Upload
                     .Select(f => new FilesStatus(f))
                     .ToArray();
 
-            string jsonObj = js.Serialize(files);
+            string jsonObj = _js.Serialize(files);
             context.Response.AddHeader("Content-Disposition", "inline; filename=\"files.json\"");
             context.Response.Write(jsonObj);
             context.Response.ContentType = "application/json";

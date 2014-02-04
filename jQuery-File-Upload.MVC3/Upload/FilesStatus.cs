@@ -36,25 +36,25 @@ namespace jQuery_File_Upload.MVC3.Upload
 
             var ext = Path.GetExtension(fullPath);
             
-            var fileSize = ConvertBytesToMegabytes(new FileInfo(fullPath).Length);
-            if (fileSize > 3 || !IsImage(ext)) thumbnail_url = "/Content/img/generalFile.png";
-            else thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath);
+            //var fileSize = ConvertBytesToMegabytes(new FileInfo(fullPath).Length);
+            //if (fileSize > 3 || !IsImage(ext)) thumbnail_url = "/Content/img/generalFile.png";
+            //else thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath);
         }
 
-        private bool IsImage(string ext)
-        {
-            return true;
-            //return ext == ".gif" || ext == ".jpg" || ext == ".png" || ext == ".patch" || ext == ".txt || ext == ".patch;
-        }
+        //private bool IsImage(string ext)
+        //{
+        //    return true;
+        //    //return ext == ".gif" || ext == ".jpg" || ext == ".png" || ext == ".patch" || ext == ".txt || ext == ".patch;
+        //}
 
-        private string EncodeFile(string fileName)
-        {
-            return Convert.ToBase64String(System.IO.File.ReadAllBytes(fileName));
-        }
+        //private string EncodeFile(string fileName)
+        //{
+        //    return Convert.ToBase64String(System.IO.File.ReadAllBytes(fileName));
+        //}
 
-        static double ConvertBytesToMegabytes(long bytes)
-        {
-            return (bytes / 1024f) / 1024f;
-        }
+        //static double ConvertBytesToMegabytes(long bytes)
+        //{
+        //    return (bytes / 1024f) / 1024f;
+        //}
     }
 }
