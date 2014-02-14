@@ -1,7 +1,7 @@
 ﻿@using ClientDependency.Core.Mvc
 
 @{
-    ViewBag.Title = "Vortal Upload Demo";
+    ViewBag.Title = "Upload Demo";
 
     Html.RequiresCss("Bootstrap/bootstrap.min.css", "Content", 2);
     Html.RequiresCss("Bootstrap/bootstrap-responsive.min.css", "Content", 3);
@@ -129,19 +129,22 @@
             <td></td>
             <td></td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            <td class="error" colspan="2">
+                <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
+            </td>
             {% } else { %}
             <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
+                <span>{%=file.name%}</span>
+                @*<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>*@
             </td>
             <td class="description"><span>{%=document.getElementById("fileDescription").value%}</span></td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             <td class="size"><span>{%=document.getElementById("chkIsSigned").checked ? 'Yes' : 'No'%}</span></td>
             <td class="size"><span>{%=document.getElementById("chkIsEmbedded").checked ? 'Yes' : 'No'%}</span></td>
             <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
-            <td><span class="glyphicon glyphicon-ok"></span></td>
+            <td><span class="label btn-success">Success!</span></td>
             {% } %}
-            <td></td>
+            <td>N/A</td>
             @*<td class="delete">
                 <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
                     <i class="icon-trash icon-white"></i>
