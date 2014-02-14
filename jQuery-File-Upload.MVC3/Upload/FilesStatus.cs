@@ -13,10 +13,11 @@ namespace jQuery_File_Upload.MVC3.Upload
         public int size { get; set; }
         public string progress { get; set; }
         public string url { get; set; }
-        public string thumbnail_url { get; set; }
+        //public string thumbnail_url { get; set; }
         public string delete_url { get; set; }
         public string delete_type { get; set; }
         public string error { get; set; }
+        public string description { get; set;} 
 
         public FilesStatus() { }
 
@@ -34,8 +35,7 @@ namespace jQuery_File_Upload.MVC3.Upload
             delete_url = HandlerPath + "UploadHandler.ashx?f=" + fileName;
             delete_type = "DELETE";
 
-            var ext = Path.GetExtension(fullPath);
-            
+            //var ext = Path.GetExtension(fullPath);
             //var fileSize = ConvertBytesToMegabytes(new FileInfo(fullPath).Length);
             //if (fileSize > 3 || !IsImage(ext)) thumbnail_url = "/Content/img/generalFile.png";
             //else thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath);

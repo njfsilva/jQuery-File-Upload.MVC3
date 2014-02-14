@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+﻿@charset 'UTF-8';
 /*
  * jQuery File Upload UI Plugin CSS 6.3
  * https://github.com/blueimp/jQuery-File-Upload
@@ -75,6 +75,12 @@
     display: inline-block;
     word-wrap: break-word;
   }
+    .files .description * {
+    width: 80px;
+    display: inline-block;
+    word-wrap: break-word;
+  }
+
   .files .progress {
     width: 20px;
   }

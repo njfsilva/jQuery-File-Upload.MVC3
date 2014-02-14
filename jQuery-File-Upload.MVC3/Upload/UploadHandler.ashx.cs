@@ -105,9 +105,12 @@ namespace jQuery_File_Upload.MVC3.Upload
             var fileStreamFromRequest = context.Request.Files[0].InputStream;
             var fullName = StorageRoot + Path.GetFileName(fileName);
 
+            var certificate = context.Request.Form["certificateFileName[]"];
+
             using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
             {
                 fileStreamFromRequest.CopyTo(fs);
+                fs.Close();
             }
 
             statuses.Add(new FilesStatus(new FileInfo(fullName)));
@@ -125,7 +128,11 @@ namespace jQuery_File_Upload.MVC3.Upload
                 file.SaveAs(fullPath);
 
                 var fullName = Path.GetFileName(file.FileName);
-                statuses.Add(new FilesStatus(fullName, file.ContentLength, fullPath));
+
+                statuses.Add(new FilesStatus(
+                    fullName,
+                    file.ContentLength,
+                    fullPath));
             }
         }
 

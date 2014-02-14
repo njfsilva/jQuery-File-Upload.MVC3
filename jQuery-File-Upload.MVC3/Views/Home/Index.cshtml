@@ -5,26 +5,18 @@
 
     Html.RequiresCss("Bootstrap/bootstrap.min.css", "Content", 2);
     Html.RequiresCss("Bootstrap/bootstrap-responsive.min.css", "Content", 3);
-
     Html.RequiresCss("FileUpload/jquery.fileupload-ui.css", "Content", 5);
 
     Html.RequiresJs("jquery-1.11.0.js", "Scripts", 1);
     Html.RequiresJs("jquery-migrate-1.2.1.js", "Scripts", 2);
-    Html.RequiresJs("jquery-ui-1.8.11.js", "Scripts", 3);
-
+    Html.RequiresJs("jquery-ui-1.9.2.custom.js", "Scripts", 3);
     Html.RequiresJs("FileUpload/tmpl.min.js", "Content", 5);
-    
     Html.RequiresJs("Bootstrap/bootstrap.min.js", "Content", 6);
-
     Html.RequiresJs("FileUpload/jquery.iframe-transport.js", "Content", 10);
     Html.RequiresJs("FileUpload/jquery.fileupload.js", "Content", 10);
-
     Html.RequiresJs("FileUpload/jquery.fileupload-ui.js", "Content", 30);
-
     Html.RequiresJs("FileUpload/locale.js", "Content", 90);
     Html.RequiresJs("FileUpload/main.js", "Content", 99);
-
-    
 }
 
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
@@ -32,7 +24,7 @@
 
     <form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">
     @*<form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">*@
-        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+
         <div class="row fileupload-buttonbar">
             <div class="span7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
@@ -41,46 +33,69 @@
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
-                <button type="submit" class="btn btn-primary start">
-                    <i class="icon-upload icon-white"></i>
-                    <span>Start upload</span>
-                </button>
-                <button type="reset" class="btn btn-warning cancel">
+                @*<button type="reset" class="btn btn-warning cancel">
                     <i class="icon-ban-circle icon-white"></i>
                     <span>Cancel upload</span>
-                </button>
-                <button type="button" class="btn btn-danger delete">
+                </button>*@
+                @*<button type="button" class="btn btn-danger delete">
                     <i class="icon-trash icon-white"></i>
                     <span>Delete</span>
-                </button>
-                <input type="checkbox" class="toggle">
+                </button>*@
+                @*<input type="checkbox" class="toggle">*@
             </div>
-            @*<div class="span5">
-                    <!-- The global progress bar -->
-                    <div class="progress progress-success progress-striped active fade">
-                        <div class="bar" style="width:0%;"></div>
-                    </div>
-                </div>*@
         </div>
         <br>
         <!-- The table listing the files available for upload/download -->
-        <table class="table table-striped"><tbody class="files" data-toggle="filesGallery" data-target="#filesGallery"></tbody></table>
+        <table class="table table-striped" id="filesTables">
+            <tr>
+                <th>File</th>
+                <th>Description</th>
+                @*<th>Size</th>*@
+                <th>Signed?</th>
+                <th>Embedded?</th>
+                <th>Select Certificate</th>
+                <th>Progress</th>
+                <th>Action</th>
+            </tr>
+            <tbody class="files"></tbody>
+        </table>
+        <div class="pull-right fileupload-buttonbar">
+            <button type="submit" class="btn btn-primary start">
+                <i class="icon-upload icon-white"></i>
+                <span>Upload</span>
+            </button>
+        </div>
     </form>
 
 
-    <!-- The template to display files available for upload -->
-    <script id="template-upload" type="text/x-tmpl">
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload fade">
             <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td>
+                <input type="text" id="fileDescription" name="fileDescription[]" class="text-box" />
+            </td>
+            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             {% if (file.error) { %}
             <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
             {% } else if (o.files.valid && !i) { %}
             <td>
-                <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
+                <input type="checkbox" id="chkIsSigned" name="chkIsSigned[]" onclick="ToggleNextElement(this);" />
             </td>
-            <td class="start">
+            <td>
+                <input type="checkbox" id="chkIsEmbedded" name="chkIsEmbedded[]" disabled onclick="ToggleNextElement(this);" />
+            </td>
+            <td>
+                <input type="file" id="certificateFile" name="certificateFile[]" disabled onchange="MakeItAFileUpload(this);" />
+                <input type="hidden" name="certificateFileName[]" />
+            </td>
+            <td>
+                <div class="progress progress-success progress-striped active">
+                    <div class="bar" style="width:0%;" />
+                </div>
+            </td>
+            <td class="start" hidden>
                 {% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary">
                     <i class="icon-upload icon-white"></i>
@@ -88,42 +103,103 @@
                 </button>
                 {% } %}
             </td>
-            {% } else { %}
-            <td colspan="2"></td>
-            {% } %}
             <td class="cancel">
-                {% if (!i) { %}
+            {% if (!i) { %}
                 <button class="btn btn-warning">
                     <i class="icon-ban-circle icon-white"></i>
                     <span>{%=locale.fileupload.cancel%}</span>
                 </button>
                 {% } %}
             </td>
+            {% } else { %}
+            <td colspan="2"></td>
+            {% } %}
         </tr>
         {% } %}
     </script>
+
     <!-- The template to display files available for download -->
-    <script id="template-download" type="text/x-tmpl">
+<script id="template-download" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-download fade">
             {% if (file.error) { %}
-            <td></td>
             <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
             {% } else { %}
             <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
             </td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td colspan="2"></td>
+            <td class="description"><span>{%=document.getElementById("fileDescription").value%}</span></td>
+            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
+            <td class="size"><span>{%=document.getElementById("chkIsSigned").checked ? 'Yes' : 'No'%}</span></td>
+            <td class="size"><span>{%=document.getElementById("chkIsEmbedded").checked ? 'Yes' : 'No'%}</span></td>
+            <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
+            <td><span class="glyphicon glyphicon-ok"></span></td>
             {% } %}
-            <td class="delete">
+            <td></td>
+            @*<td class="delete">
                 <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
                     <i class="icon-trash icon-white"></i>
                     <span>{%=locale.fileupload.destroy%}</span>
                 </button>
-            </td>
+            </td>*@
         </tr>
         {% } %}
-    </script>
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $(function () {
+            'use strict';
+
+            // Initialize the jQuery File Upload widget:
+            $('#fileupload').fileupload();
+
+            $('#fileupload').fileupload('option', {
+                maxFileSize: 9999999999,
+                //resizeMaxWidth: 1920,
+                //resizeMaxHeight: 1200,
+                maxChunkSize: 1024 * 512, //512 KB 2 MB
+                singleFileUploads: 10,
+                autoUpload: false
+            });
+        });
+
+    });
+
+    function ToggleNextElement(sender) {
+
+        var elementToToggle = $(sender).parent().next().children();
+        var nextElement = $(elementToToggle).parent().next().children();
+
+        if (elementToToggle.attr('disabled')) {
+            elementToToggle.removeAttr('disabled');
+        } else {
+            elementToToggle.attr('disabled', 'disabled');
+        }
+
+        //Para o caso de desactivar o primeiro quando os outros estao activos
+        if (elementToToggle.attr('disabled')) {
+            elementToToggle.removeAttr('checked');
+            nextElement.attr('disabled', 'disabled');
+        }
+        
+    }
+
+    function MakeItAFileUpload(sender) {
+
+        $('#fileupload').fileupload('add', { files: $(sender).prop("files") });
+
+        $(sender).next().attr('value', $(sender).prop("files")[0].name);
+
+    }
+</script>
+

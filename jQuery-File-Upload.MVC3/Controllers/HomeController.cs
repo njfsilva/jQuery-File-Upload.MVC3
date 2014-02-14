@@ -97,20 +97,10 @@ namespace jQuery_File_Upload.MVC3.Controllers
             {
                 var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
 
-                if (System.IO.File.Exists(fullName))
+                using (var files = new FileStream(fullName, FileMode.Append, FileAccess.Write))
                 {
-                    using (var files = new FileStream(fullName, FileMode.Append, FileAccess.Write))
-                    {
-                        if (file != null) file.InputStream.CopyTo(files);
-                    }
-                }
-                else
-                {
-                    using (var newFile = System.IO.File.Create(fullName))
-                    {
-                        if (file != null) file.InputStream.CopyTo(newFile);
-                    }
-
+                    if (file != null) file.InputStream.CopyTo(files);
+                    files.Close();
                 }
 
                 statuses.Add(new ViewDataUploadFilesResult
