@@ -106,7 +106,11 @@
     <Content Include="Content\Bootstrap\bootstrap-responsive.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.js" />
+    <Content Include="Content\FileUpload\demo.css" />
+    <Content Include="Content\FileUpload\jquery.fileupload-jquery-ui.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload-process.js" />
     <Content Include="Content\FileUpload\jquery.fileupload-ui.js" />
+    <Content Include="Content\FileUpload\jquery.fileupload.css" />
     <Content Include="Content\FileUpload\jquery.fileupload.js" />
     <Content Include="Content\FileUpload\jquery.iframe-transport.js" />
     <Content Include="Content\FileUpload\jquery.fileupload-ui.css" />

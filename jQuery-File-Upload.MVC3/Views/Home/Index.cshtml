@@ -1,11 +1,13 @@
 ﻿@using ClientDependency.Core.Mvc
 
 @{
-    ViewBag.Title = "Vortal Upload Demo";
+    ViewBag.Title = "Upload Demo";
 
     Html.RequiresCss("Bootstrap/bootstrap.min.css", "Content", 2);
     Html.RequiresCss("Bootstrap/bootstrap-responsive.min.css", "Content", 3);
-    Html.RequiresCss("FileUpload/jquery.fileupload-ui.css", "Content", 5);
+    Html.RequiresCss("FileUpload/jquery.fileupload.css", "Content", 5);
+    Html.RequiresCss("FileUpload/jquery.fileupload-ui.css", "Content", 6);
+    Html.RequiresCss("FileUpload/demo.css", "Content", 7);
 
     Html.RequiresJs("jquery-1.11.0.js", "Scripts", 1);
     Html.RequiresJs("jquery-migrate-1.2.1.js", "Scripts", 2);
@@ -14,7 +16,9 @@
     Html.RequiresJs("Bootstrap/bootstrap.min.js", "Content", 6);
     Html.RequiresJs("FileUpload/jquery.iframe-transport.js", "Content", 10);
     Html.RequiresJs("FileUpload/jquery.fileupload.js", "Content", 10);
+    Html.RequiresJs("FileUpload/jquery.fileupload-process.js", "Content", 11);
     Html.RequiresJs("FileUpload/jquery.fileupload-ui.js", "Content", 30);
+    Html.RequiresJs("FileUpload/jquery.fileupload-jquery-ui.js", "Content", 31);
     Html.RequiresJs("FileUpload/locale.js", "Content", 90);
     Html.RequiresJs("FileUpload/main.js", "Content", 99);
 }
@@ -25,131 +29,86 @@
     <form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">
     @*<form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">*@
 
-        <div class="row fileupload-buttonbar">
-            <div class="span7">
+        <div class="fileupload-buttonbar">
+            <div class="fileupload-buttons">
                 <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
-                    <i class="icon-plus icon-white"></i>
+                <span class="fileinput-button">
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
-                @*<button type="reset" class="btn btn-warning cancel">
-                    <i class="icon-ban-circle icon-white"></i>
-                    <span>Cancel upload</span>
-                </button>*@
-                @*<button type="button" class="btn btn-danger delete">
-                    <i class="icon-trash icon-white"></i>
-                    <span>Delete</span>
-                </button>*@
-                @*<input type="checkbox" class="toggle">*@
+                <button type="submit" class="start">Start upload</button>
+                <button type="reset" class="cancel">Cancel upload</button>
+                <button type="button" class="delete">Delete</button>
+                <input type="checkbox" class="toggle">
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
             </div>
-        </div>
-        <br>
-        <!-- The table listing the files available for upload/download -->
-        <table class="table table-striped" id="filesTables">
-            <tr>
-                <th>File</th>
-                <th>Description</th>
-                @*<th>Size</th>*@
-                <th>Signed?</th>
-                <th>Embedded?</th>
-                <th>Select Certificate</th>
-                <th>Progress</th>
-                <th>Action</th>
-            </tr>
-            <tbody class="files"></tbody>
-        </table>
-        <div class="pull-right fileupload-buttonbar">
-            <button type="submit" class="btn btn-primary start">
-                <i class="icon-upload icon-white"></i>
-                <span>Upload</span>
-            </button>
+            <!-- The global progress state -->
+            <div class="fileupload-progress fade" style="display:none">
+                <!-- The global progress bar -->
+                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
         </div>
     </form>
 
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
-        {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-upload fade">
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td>
-                <input type="text" id="fileDescription" name="fileDescription[]" class="text-box" />
-            </td>
-            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-            {% } else if (o.files.valid && !i) { %}
-            <td>
-                <input type="checkbox" id="chkIsSigned" name="chkIsSigned[]" onclick="ToggleNextElement(this);" />
-            </td>
-            <td>
-                <input type="checkbox" id="chkIsEmbedded" name="chkIsEmbedded[]" disabled onclick="ToggleNextElement(this);" />
-            </td>
-            <td>
-                <input type="file" id="certificateFile" name="certificateFile[]" disabled onchange="MakeItAFileUpload(this);" />
-                <input type="hidden" name="certificateFileName[]" />
-            </td>
-            <td>
-                <div class="progress progress-success progress-striped active">
-                    <div class="bar" style="width:0%;" />
-                </div>
-            </td>
-            <td class="start" hidden>
-                {% if (!o.options.autoUpload) { %}
-                <button class="btn btn-primary">
-                    <i class="icon-upload icon-white"></i>
-                    <span>{%=locale.fileupload.start%}</span>
-                </button>
-                {% } %}
-            </td>
-            <td class="cancel">
-            {% if (!i) { %}
-                <button class="btn btn-warning">
-                    <i class="icon-ban-circle icon-white"></i>
-                    <span>{%=locale.fileupload.cancel%}</span>
-                </button>
-                {% } %}
-            </td>
-            {% } else { %}
-            <td colspan="2"></td>
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress"></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+            <button class="start" disabled>Start</button>
             {% } %}
-        </tr>
-        {% } %}
-    </script>
+            {% if (!i) { %}
+            <button class="cancel">Cancel</button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
 
     <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
-        {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-download fade">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            </p>
             {% if (file.error) { %}
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-            {% } else { %}
-            <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
-            </td>
-            <td class="description"><span>{%=document.getElementById("fileDescription").value%}</span></td>
-            @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            <td class="size"><span>{%=document.getElementById("chkIsSigned").checked ? 'Yes' : 'No'%}</span></td>
-            <td class="size"><span>{%=document.getElementById("chkIsEmbedded").checked ? 'Yes' : 'No'%}</span></td>
-            <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
-            <td><span class="glyphicon glyphicon-ok"></span></td>
+            <div><span class="error">Error</span> {%=file.error%}</div>
             {% } %}
-            <td></td>
-            @*<td class="delete">
-                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                    <i class="icon-trash icon-white"></i>
-                    <span>{%=locale.fileupload.destroy%}</span>
-                </button>
-            </td>*@
-        </tr>
-        {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            <button class="delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deletewithcredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>Delete</button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+        </td>
+    </tr>
+    {% } %}
 </script>
 
 <script type="text/javascript">
