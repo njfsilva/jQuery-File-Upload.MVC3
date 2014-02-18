@@ -24,6 +24,7 @@
 
     <form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">
     @*<form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">*@
+        <input type="hidden" id="maxChunkSize" name="maxChunkSize" value="0" />
 
         <div class="row fileupload-buttonbar">
             <div class="span7">
@@ -87,8 +88,11 @@
                 <input type="checkbox" id="chkIsEmbedded" name="chkIsEmbedded[]" disabled onclick="ToggleNextElement(this);" />
             </td>
             <td>
-                <input type="file" id="certificateFile" name="certificateFile[]" disabled onchange="MakeItAFileUpload(this);" />
+                {% if(!globalIsNextFileSignature) { %}
+                <input type="file" id="certificateFile" name="certificateFile[]" disabled onclick="SetSignatureVariable();" onchange="AddToUploadList(this);" />
                 <input type="hidden" name="certificateFileName[]" />
+                {%= SetSignatureVariable() %}
+                {% } %}
             </td>
             <td>
                 <div class="progress progress-success progress-striped active">
@@ -141,7 +145,9 @@
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             <td class="size"><span>{%=document.getElementById("chkIsSigned").checked ? 'Yes' : 'No'%}</span></td>
             <td class="size"><span>{%=document.getElementById("chkIsEmbedded").checked ? 'Yes' : 'No'%}</span></td>
+            {% if(!globalIsNextFileSignature) { %}
             <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
+            {% } %}
             <td><span class="label btn-success">Success!</span></td>
             {% } %}
             <td>N/A</td>
@@ -157,26 +163,19 @@
 
 <script type="text/javascript">
 
+    var globalIsNextFileSignature = false;
+
     $(document).ready(function () {
 
+        InitializeFileUploader();
 
-        $(function () {
-            'use strict';
-
-            // Initialize the jQuery File Upload widget:
-            $('#fileupload').fileupload();
-
-            $('#fileupload').fileupload('option', {
-                maxFileSize: 9999999999,
-                //resizeMaxWidth: 1920,
-                //resizeMaxHeight: 1200,
-                maxChunkSize: 1024 * 512, //512 KB 2 MB
-                singleFileUploads: 10,
-                autoUpload: false
-            });
-        });
+        SetChunkSize();
 
     });
+
+    function SetChunkSize() {
+        $("#maxChunkSize").val($("#fileupload").fileupload('option').maxChunkSize);
+    }
 
     function ToggleNextElement(sender) {
 
@@ -197,12 +196,37 @@
         
     }
 
-    function MakeItAFileUpload(sender) {
+    function AddToUploadList(sender) {
 
         $('#fileupload').fileupload('add', { files: $(sender).prop("files") });
 
-        $(sender).next().attr('value', $(sender).prop("files")[0].name);
+        //var signatureFile = $(sender).prop("files");
 
+        //signatureFile.prop('isSignatureFile', 'true');
+
+        //$('#fileupload').fileupload('add', { files: signatureFile });
+
+        $(sender).next().attr('value', $(sender).prop("files")[0].name);
     }
+
+    function InitializeFileUploader() {
+
+        'use strict';
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload();
+
+        $('#fileupload').fileupload('option', {
+            maxFileSize: 9999999999,
+            maxChunkSize: 1024 * 512, //512 KB
+            singleFileUploads: 10,
+            autoUpload: false
+        });
+    }
+
+    function SetSignatureVariable() {
+
+        globalIsNextFileSignature = true;
+    }
+
 </script>
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -15,12 +16,12 @@ namespace jQuery_File_Upload.MVC3.Upload
 
         private string StorageRoot
         {
-            get { return Path.Combine(HttpContext.Current.Server.MapPath("~/Files/")); } 
+            get { return Path.Combine(HttpContext.Current.Server.MapPath("~/Files/")); }
         }
 
         public UploadHandler()
         {
-            _js = new JavaScriptSerializer {MaxJsonLength = 41943040};
+            _js = new JavaScriptSerializer { MaxJsonLength = 41943040 };
         }
 
         public bool IsReusable { get { return false; } }
@@ -101,19 +102,29 @@ namespace jQuery_File_Upload.MVC3.Upload
         // Upload partial file
         private void UploadPartialFile(string fileName, HttpContext context, List<FilesStatus> statuses)
         {
-            if (context.Request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
+            if (context.Request.Files.Count != 1)
+                throw new HttpRequestValidationException(
+                    "Attempt to upload chunked file containing more than one fragment per request");
+
             var fileStreamFromRequest = context.Request.Files[0].InputStream;
             var fullName = StorageRoot + Path.GetFileName(fileName);
 
-            var certificate = context.Request.Form["certificateFileName[]"];
-
-            using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+            if (!string.IsNullOrEmpty(context.Request.Form["maxChunkSize"]))
             {
-                fileStreamFromRequest.CopyTo(fs);
-                fs.Close();
-            }
+                var maxChunkSize = Convert.ToInt64(context.Request.Form["maxChunkSize"]);
+                var last = fileStreamFromRequest.Length < maxChunkSize;
 
-            statuses.Add(new FilesStatus(new FileInfo(fullName)));
+                using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+                {
+                    fileStreamFromRequest.CopyTo(fs);
+                    fs.Close();
+                }
+
+                if (last)
+                    Console.WriteLine("WEEEEEEEE"); //BITCH IMMA DO SOME WONDERFUL SHIT HERE. SCIENCE BITCH!
+
+                statuses.Add(new FilesStatus(new FileInfo(fullName)));
+            }
         }
 
         // Upload entire file
