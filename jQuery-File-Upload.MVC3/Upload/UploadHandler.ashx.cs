@@ -100,13 +100,15 @@ namespace jQuery_File_Upload.MVC3.Upload
         }
 
         // Upload partial file
-        private void UploadPartialFile(string fileName, HttpContext context, List<FilesStatus> statuses)
+        private void UploadPartialFile(string fileName, HttpContext context, ICollection<FilesStatus> statuses)
         {
             if (context.Request.Files.Count != 1)
                 throw new HttpRequestValidationException(
                     "Attempt to upload chunked file containing more than one fragment per request");
 
             var fileStreamFromRequest = context.Request.Files[0].InputStream;
+            //var file = context.Request.Files[0];
+            //var contenttype = file.ContentType;
             var fullName = StorageRoot + Path.GetFileName(fileName);
 
             if (!string.IsNullOrEmpty(context.Request.Form["maxChunkSize"]))

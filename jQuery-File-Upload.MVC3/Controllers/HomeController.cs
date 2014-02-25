@@ -87,32 +87,49 @@ namespace jQuery_File_Upload.MVC3.Controllers
         //}
 
 
-        private void UploadPartialFile(string fileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
+        private void UploadPartialFile(string fileName, HttpRequestBase request, ICollection<ViewDataUploadFilesResult> statuses)
         {
-            if (request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
+            if (request.Files.Count != 1)
+                throw new HttpRequestValidationException(
+                    "Attempt to upload chunked file containing more than one fragment per request");
 
             var file = request.Files[0];
 
-            if (fileName != null)
+            if (file != null)
             {
-                var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
+                var fileStreamFromRequest = file.InputStream;
+                var fullName = StorageRoot + Path.GetFileName(fileName);
 
-                using (var files = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+                if (!string.IsNullOrEmpty(request.Form["maxChunkSize"]))
                 {
-                    if (file != null) file.InputStream.CopyTo(files);
-                    files.Close();
+                    var maxChunkSize = Convert.ToInt64(request.Form["maxChunkSize"]);
+                    var useSignatureFile = request.Form["useSignatureFile"];
+                    var associatedSignatureFile = request.Form["certificateFileName[]"];
+                    var isSignatureFile = fileName.Equals(associatedSignatureFile) ? "yes" : "no";
+                    var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE!!!!!!!
+
+                    using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
+                    {
+                        fileStreamFromRequest.CopyTo(fs);
+                        fs.Close();
+                    }
+
+                    if (last)
+                    {
+
+                    }
+
+                    statuses.Add(new ViewDataUploadFilesResult
+                    {
+                        name = fileName,
+                        size = file.ContentLength,
+                        type = file.ContentType,
+                        url = string.Empty,
+                        delete_url = string.Empty,
+                        delete_type = "GET",
+                        isSignatureFile = isSignatureFile
+                    });
                 }
-
-                statuses.Add(new ViewDataUploadFilesResult
-                {
-                    name = fileName,
-                    size = file.ContentLength,
-                    type = file.ContentType,
-                    url = "/Home/Download/" + fileName,
-                    delete_url = "/Home/Delete/" + fileName,
-                    //thumbnail_url = @"data:image/png;base64," + EncodeFile(fullName),
-                    delete_type = "GET",
-                });
             }
         }
 
@@ -123,7 +140,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
             {
                 var file = request.Files[i];
 
-                if (file != null)
+                if (file != null && file.FileName != null)
                 {
                     var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
 
@@ -134,8 +151,8 @@ namespace jQuery_File_Upload.MVC3.Controllers
                         name = file.FileName,
                         size = file.ContentLength,
                         type = file.ContentType,
-                        url = "/Home/Download/" + file.FileName,
-                        delete_url = "/Home/Delete/" + file.FileName,
+                        url = string.Empty,
+                        delete_url = string.Empty,
                         //thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
                         delete_type = "GET",
                     });
@@ -153,5 +170,6 @@ namespace jQuery_File_Upload.MVC3.Controllers
         public string delete_url { get; set; }
         public string thumbnail_url { get; set; }
         public string delete_type { get; set; }
+        public string isSignatureFile { get; set; }
     }
 }

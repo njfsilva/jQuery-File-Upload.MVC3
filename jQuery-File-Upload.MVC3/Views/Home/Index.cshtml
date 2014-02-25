@@ -22,8 +22,8 @@
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-    <form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">
-    @*<form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">*@
+    @*<form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">*@
+    <form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="maxChunkSize" name="maxChunkSize" value="0" />
 
         <div class="row fileupload-buttonbar">
@@ -33,6 +33,10 @@
                     <i class="icon-plus icon-white"></i>
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
+                </span>
+                <span>
+                    Quero usar ficheiro de assinatura
+                    <input type="checkbox" id="useSignatureFile" onchange="ToggleSignatureFiles();" />
                 </span>
                 @*<button type="reset" class="btn btn-warning cancel">
                     <i class="icon-ban-circle icon-white"></i>
@@ -52,15 +56,13 @@
                 <th>File</th>
                 <th>Description</th>
                 @*<th>Size</th>*@
-                <th>Signed?</th>
-                <th>Embedded?</th>
-                <th>Select Certificate</th>
+                <th hidden>Signature File</th>
                 <th>Progress</th>
                 <th>Action</th>
             </tr>
             <tbody class="files"></tbody>
         </table>
-        <div class="pull-right fileupload-buttonbar">
+        <div class="pull-right fileupload-buttonbar">           
             <button type="submit" class="btn btn-primary start">
                 <i class="icon-upload icon-white"></i>
                 <span>Upload</span>
@@ -73,26 +75,23 @@
 <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload fade">
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td>
+            <td class="name">
+                <span>{%=file.name%}</span>
+            </td>
+            <td class="description">
                 <input type="text" id="fileDescription" name="fileDescription[]" class="text-box" />
             </td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             {% if (file.error) { %}
             <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
             {% } else if (o.files.valid && !i) { %}
+            {% if($("#useSignatureFile").prop('checked')){ %}
             <td>
-                <input type="checkbox" id="chkIsSigned" name="chkIsSigned[]" onclick="ToggleNextElement(this);" />
-            </td>
-            <td>
-                <input type="checkbox" id="chkIsEmbedded" name="chkIsEmbedded[]" disabled onclick="ToggleNextElement(this);" />
-            </td>
-            <td>
-                {% if(!globalIsNextFileSignature) { %}
-                <input type="file" id="certificateFile" name="certificateFile[]" disabled onclick="SetSignatureVariable();" onchange="AddToUploadList(this);" />
+            {% }else{ %}
+            <td hidden>
+            {% } %}
+                <input type="file" id="certificateFile" name="certificateFile[]" onchange="AddToUploadList(this);" />
                 <input type="hidden" name="certificateFileName[]" />
-                {%= SetSignatureVariable() %}
-                {% } %}
             </td>
             <td>
                 <div class="progress progress-success progress-striped active">
@@ -116,7 +115,7 @@
                 {% } %}
             </td>
             {% } else { %}
-            <td colspan="2"></td>
+            <td></td>
             {% } %}
         </tr>
         {% } %}
@@ -136,21 +135,21 @@
             <td class="error" colspan="2">
                 <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
             </td>
+            {% } else if(file.isSignatureFile == "yes") { %}
+            @*mostra nada*@
             {% } else { %}
             <td class="name">
                 <span>{%=file.name%}</span>
                 @*<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>*@
             </td>
-            <td class="description"><span>{%=document.getElementById("fileDescription").value%}</span></td>
+            <td class="description">
+                <span>{%=document.getElementById("fileDescription").value%}</span>
+            </td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            <td class="size"><span>{%=document.getElementById("chkIsSigned").checked ? 'Yes' : 'No'%}</span></td>
-            <td class="size"><span>{%=document.getElementById("chkIsEmbedded").checked ? 'Yes' : 'No'%}</span></td>
-            {% if(!globalIsNextFileSignature) { %}
             <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
-            {% } %}
             <td><span class="label btn-success">Success!</span></td>
-            {% } %}
             <td>N/A</td>
+            {% } %}
             @*<td class="delete">
                 <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
                     <i class="icon-trash icon-white"></i>
@@ -162,8 +161,6 @@
 </script>
 
 <script type="text/javascript">
-
-    var globalIsNextFileSignature = false;
 
     $(document).ready(function () {
 
@@ -177,28 +174,21 @@
         $("#maxChunkSize").val($("#fileupload").fileupload('option').maxChunkSize);
     }
 
-    function ToggleNextElement(sender) {
-
-        var elementToToggle = $(sender).parent().next().children();
-        var nextElement = $(elementToToggle).parent().next().children();
-
-        if (elementToToggle.attr('disabled')) {
-            elementToToggle.removeAttr('disabled');
-        } else {
-            elementToToggle.attr('disabled', 'disabled');
-        }
-
-        //Para o caso de desactivar o primeiro quando os outros estao activos
-        if (elementToToggle.attr('disabled')) {
-            elementToToggle.removeAttr('checked');
-            nextElement.attr('disabled', 'disabled');
-        }
-        
+    function ToggleSignatureFiles(hide) {
+        //$('td:nth-child(3),th:nth-child(3)').toggle(); // CSS 3, Nao funca no ie <= 8;
+        $('td:first-child+*+*,th:first-child+*+*').toggle();
     }
 
     function AddToUploadList(sender) {
 
-        $('#fileupload').fileupload('add', { files: $(sender).prop("files") });
+        //set certificateFileName
+        $(sender).next().attr('value', $(sender).prop("files")[0].name);
+
+        //disable file selector
+        $(sender).attr('disabled', 'disabled');
+
+        //send signature file
+        $('#fileupload').fileupload('send', { files: $(sender).prop("files") });
 
         //var signatureFile = $(sender).prop("files");
 
@@ -206,7 +196,9 @@
 
         //$('#fileupload').fileupload('add', { files: signatureFile });
 
-        $(sender).next().attr('value', $(sender).prop("files")[0].name);
+
+        //$(sender).prop("files").setAttribute('oi', 'ola');
+        //alert($(sender).prop("files").getAttribute('oi'));
     }
 
     function InitializeFileUploader() {
@@ -217,15 +209,9 @@
 
         $('#fileupload').fileupload('option', {
             maxFileSize: 9999999999,
-            maxChunkSize: 1024 * 512, //512 KB
-            singleFileUploads: 10,
-            autoUpload: false
+            maxChunkSize: 1024 * 1024, //512 KB
+            autoUpload: false,
         });
-    }
-
-    function SetSignatureVariable() {
-
-        globalIsNextFileSignature = true;
     }
 
 </script>
