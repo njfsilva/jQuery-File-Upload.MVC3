@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,7 +11,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
     {
         private string StorageRoot
         {
-            get { return Path.Combine(Server.MapPath("~/Files")); }
+            get { return Path.Combine(Server.MapPath("~/Files/")); }
         }
 
         public ActionResult Index()
@@ -81,12 +81,6 @@ namespace jQuery_File_Upload.MVC3.Controllers
             return Json(r);
         }
 
-        //private string EncodeFile(string fileName)
-        //{
-        //    return Convert.ToBase64String(System.IO.File.ReadAllBytes(fileName));
-        //}
-
-
         private void UploadPartialFile(string fileName, HttpRequestBase request, ICollection<ViewDataUploadFilesResult> statuses)
         {
             if (request.Files.Count != 1)
@@ -100,39 +94,37 @@ namespace jQuery_File_Upload.MVC3.Controllers
                 var fileStreamFromRequest = file.InputStream;
                 var fullName = StorageRoot + Path.GetFileName(fileName);
 
-                if (!string.IsNullOrEmpty(request.Form["maxChunkSize"]))
+                var fileDescription = request.Form["fileDescription[]"].Split(',').Last();
+                var maxChunkSize = Convert.ToInt64(request.Form["maxChunkSize[]"].Split(',').Last());
+                var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
+                var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE!!!!!!!
+
+                using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
                 {
-                    var maxChunkSize = Convert.ToInt64(request.Form["maxChunkSize"]);
-                    var useSignatureFile = request.Form["useSignatureFile"];
-                    var associatedSignatureFile = request.Form["certificateFileName[]"];
-                    var isSignatureFile = fileName.Equals(associatedSignatureFile) ? "yes" : "no";
-                    var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE!!!!!!!
-
-                    using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
-                    {
-                        fileStreamFromRequest.CopyTo(fs);
-                        fs.Close();
-                    }
-
-                    if (last)
-                    {
-
-                    }
-
-                    statuses.Add(new ViewDataUploadFilesResult
-                    {
-                        name = fileName,
-                        size = file.ContentLength,
-                        type = file.ContentType,
-                        url = string.Empty,
-                        delete_url = string.Empty,
-                        delete_type = "GET",
-                        isSignatureFile = isSignatureFile
-                    });
+                    fileStreamFromRequest.CopyTo(fs);
+                    fs.Close();
                 }
+
+                if (last)
+                {
+
+                }
+
+                statuses.Add(new ViewDataUploadFilesResult
+                {
+                    name = fileName,
+                    size = file.ContentLength,
+                    type = file.ContentType,
+                    description = fileDescription,
+                    associatedSignatureFile = associatedSignatureFile,
+                    url = string.Empty,
+                    delete_url = string.Empty,
+                    delete_type = "GET",
+                    isSignatureFile = isSignatureFile ? "yes" : "no"
+                });
             }
         }
-
 
         private void UploadWholeFile(HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
@@ -144,6 +136,10 @@ namespace jQuery_File_Upload.MVC3.Controllers
                 {
                     var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
 
+                    var fileDescription = request.Form["fileDescription[]"].Split(',').Last();
+                    var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
+                    var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+
                     file.SaveAs(fullPath);
 
                     statuses.Add(new ViewDataUploadFilesResult()
@@ -151,10 +147,12 @@ namespace jQuery_File_Upload.MVC3.Controllers
                         name = file.FileName,
                         size = file.ContentLength,
                         type = file.ContentType,
+                        description = fileDescription,
+                        associatedSignatureFile = associatedSignatureFile,
                         url = string.Empty,
                         delete_url = string.Empty,
-                        //thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
                         delete_type = "GET",
+                        isSignatureFile = isSignatureFile ? "yes" : "no"
                     });
                 }
             }
@@ -166,6 +164,8 @@ namespace jQuery_File_Upload.MVC3.Controllers
         public string name { get; set; }
         public int size { get; set; }
         public string type { get; set; }
+        public string description { get; set; }
+        public string associatedSignatureFile { get; set; }
         public string url { get; set; }
         public string delete_url { get; set; }
         public string thumbnail_url { get; set; }

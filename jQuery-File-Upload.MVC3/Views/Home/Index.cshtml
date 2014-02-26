@@ -16,7 +16,7 @@
     Html.RequiresJs("FileUpload/jquery.fileupload.js", "Content", 10);
     Html.RequiresJs("FileUpload/jquery.fileupload-ui.js", "Content", 30);
     Html.RequiresJs("FileUpload/locale.js", "Content", 90);
-    Html.RequiresJs("FileUpload/main.js", "Content", 99);
+    Html.RequiresJs("FileUpload/fileuploader.main.js", "Content", 99);
 }
 
 <!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
@@ -24,8 +24,7 @@
 
     @*<form id="fileupload" action="/Upload/UploadHandler.ashx" method="POST" enctype="multipart/form-data">*@
     <form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="maxChunkSize" name="maxChunkSize" value="0" />
-
+        @*<input type="hidden" id="maxChunkSize" value="0" />*@
         <div class="row fileupload-buttonbar">
             <div class="span7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
@@ -34,10 +33,8 @@
                     <span>Add files...</span>
                     <input type="file" name="files[]" multiple>
                 </span>
-                <span>
-                    Quero usar ficheiro de assinatura
-                    <input type="checkbox" id="useSignatureFile" onchange="ToggleSignatureFiles();" />
-                </span>
+                Quero usar ficheiro de assinatura
+                <input type="checkbox" id="useSignatureFile" name="useSignatureFile" onchange="ToggleSignatureFiles();" />
                 @*<button type="reset" class="btn btn-warning cancel">
                     <i class="icon-ban-circle icon-white"></i>
                     <span>Cancel upload</span>
@@ -56,14 +53,14 @@
                 <th>File</th>
                 <th>Description</th>
                 @*<th>Size</th>*@
-                <th hidden>Signature File</th>
+                <th style="display:none">Signature File</th>
                 <th>Progress</th>
                 <th>Action</th>
             </tr>
             <tbody class="files"></tbody>
         </table>
         <div class="pull-right fileupload-buttonbar">           
-            <button type="submit" class="btn btn-primary start">
+            <button type="button" class="btn btn-primary start">
                 <i class="icon-upload icon-white"></i>
                 <span>Upload</span>
             </button>
@@ -79,7 +76,7 @@
                 <span>{%=file.name%}</span>
             </td>
             <td class="description">
-                <input type="text" id="fileDescription" name="fileDescription[]" class="text-box" />
+                <input type="text" id="fileDescription" name="fileDescription[]" class="text-box" value="{%=file.name%}" />
             </td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
             {% if (file.error) { %}
@@ -88,17 +85,18 @@
             {% if($("#useSignatureFile").prop('checked')){ %}
             <td>
             {% }else{ %}
-            <td hidden>
+            <td style="display:none">
             {% } %}
                 <input type="file" id="certificateFile" name="certificateFile[]" onchange="AddToUploadList(this);" />
                 <input type="hidden" name="certificateFileName[]" />
+                <input type="hidden" name="maxChunkSize[]" value="{%= GetChunkSize() %}" />
             </td>
             <td>
                 <div class="progress progress-success progress-striped active">
                     <div class="bar" style="width:0%;" />
                 </div>
             </td>
-            <td class="start" hidden>
+            <td class="start" style="display:none">
                 {% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary">
                     <i class="icon-upload icon-white"></i>
@@ -135,7 +133,7 @@
             <td class="error" colspan="2">
                 <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
             </td>
-            {% } else if(file.isSignatureFile == "yes") { %}
+            {% } else if(file.isSignatureFile == 'yes') { %}
             @*mostra nada*@
             {% } else { %}
             <td class="name">
@@ -143,10 +141,15 @@
                 @*<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>*@
             </td>
             <td class="description">
-                <span>{%=document.getElementById("fileDescription").value%}</span>
+                <span>{%=file.description%}</span>
             </td>
             @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-            <td class="description"><span>{%=document.getElementById("certificateFile").value ? document.getElementById("certificateFile").value : 'N/A' %}</span></td>
+            {% if($("#useSignatureFile").prop('checked')){ %}
+            <td>
+            {% }else{ %}
+            <td class="description" style="display:none">
+            {% } %}
+            <span>{%= file.associatedSignatureFile == "" ? 'N/A' : file.associatedSignatureFile %}</span>
             <td><span class="label btn-success">Success!</span></td>
             <td>N/A</td>
             {% } %}
@@ -160,59 +163,4 @@
         {% } %}
 </script>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        InitializeFileUploader();
-
-        SetChunkSize();
-
-    });
-
-    function SetChunkSize() {
-        $("#maxChunkSize").val($("#fileupload").fileupload('option').maxChunkSize);
-    }
-
-    function ToggleSignatureFiles(hide) {
-        //$('td:nth-child(3),th:nth-child(3)').toggle(); // CSS 3, Nao funca no ie <= 8;
-        $('td:first-child+*+*,th:first-child+*+*').toggle();
-    }
-
-    function AddToUploadList(sender) {
-
-        //set certificateFileName
-        $(sender).next().attr('value', $(sender).prop("files")[0].name);
-
-        //disable file selector
-        $(sender).attr('disabled', 'disabled');
-
-        //send signature file
-        $('#fileupload').fileupload('send', { files: $(sender).prop("files") });
-
-        //var signatureFile = $(sender).prop("files");
-
-        //signatureFile.prop('isSignatureFile', 'true');
-
-        //$('#fileupload').fileupload('add', { files: signatureFile });
-
-
-        //$(sender).prop("files").setAttribute('oi', 'ola');
-        //alert($(sender).prop("files").getAttribute('oi'));
-    }
-
-    function InitializeFileUploader() {
-
-        'use strict';
-        // Initialize the jQuery File Upload widget:
-        $('#fileupload').fileupload();
-
-        $('#fileupload').fileupload('option', {
-            maxFileSize: 9999999999,
-            maxChunkSize: 1024 * 1024, //512 KB
-            autoUpload: false,
-        });
-    }
-
-</script>
 
