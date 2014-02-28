@@ -10,8 +10,7 @@ function GetChunkSize() {
 }
 
 function ToggleSignatureFiles() {
-    //$('td:nth-child(3),th:nth-child(3)').toggle(); // CSS 3, Nao funca no ie <= 8;
-    $('td:first-child+*+*,th:first-child+*+*').toggle();
+    $('.sign-col').toggle();
 }
 
 function AddToUploadList(sender) {
@@ -30,7 +29,6 @@ function AddToUploadList(sender) {
 function InitializeFileUploader() {
 
     'use strict';
-    // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload();
 
     $('#fileupload').fileupload('option', {

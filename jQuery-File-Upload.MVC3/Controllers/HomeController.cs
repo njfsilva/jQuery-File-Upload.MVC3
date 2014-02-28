@@ -98,6 +98,8 @@ namespace jQuery_File_Upload.MVC3.Controllers
                 var maxChunkSize = Convert.ToInt64(request.Form["maxChunkSize[]"].Split(',').Last());
                 var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
                 var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                var saveToCompanyDocs = request.Form["saveToCompanyDocs[]"] != null && request.Form["saveToCompanyDocs[]"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                
                 var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE!!!!!!!
 
                 using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
@@ -121,12 +123,13 @@ namespace jQuery_File_Upload.MVC3.Controllers
                     url = string.Empty,
                     delete_url = string.Empty,
                     delete_type = "GET",
-                    isSignatureFile = isSignatureFile ? "yes" : "no"
+                    isSignatureFile = isSignatureFile ? "yes" : "no",
+                    saveToCompanyDocs = saveToCompanyDocs ? "Yes" : "No"
                 });
             }
         }
 
-        private void UploadWholeFile(HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
+        private void UploadWholeFile(HttpRequestBase request, ICollection<ViewDataUploadFilesResult> statuses)
         {
             for (int i = 0; i < request.Files.Count; i++)
             {
@@ -139,6 +142,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
                     var fileDescription = request.Form["fileDescription[]"].Split(',').Last();
                     var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
                     var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                    var saveToCompanyDocs = request.Form["saveToCompanyDocs[]"] != null && request.Form["saveToCompanyDocs[]"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
 
                     file.SaveAs(fullPath);
 
@@ -152,7 +156,8 @@ namespace jQuery_File_Upload.MVC3.Controllers
                         url = string.Empty,
                         delete_url = string.Empty,
                         delete_type = "GET",
-                        isSignatureFile = isSignatureFile ? "yes" : "no"
+                        isSignatureFile = isSignatureFile ? "yes" : "no",
+                        saveToCompanyDocs = saveToCompanyDocs ? "Yes" : "No"
                     });
                 }
             }
@@ -171,5 +176,6 @@ namespace jQuery_File_Upload.MVC3.Controllers
         public string thumbnail_url { get; set; }
         public string delete_type { get; set; }
         public string isSignatureFile { get; set; }
+        public string saveToCompanyDocs { get; set; }
     }
 }

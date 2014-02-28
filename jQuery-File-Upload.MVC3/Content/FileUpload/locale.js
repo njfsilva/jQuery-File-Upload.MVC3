@@ -23,6 +23,8 @@ window.locale = {
         "start": "Start",
         "cancel": "Cancel",
         "destroy": "Delete",
-        "retry": "Retry"
+        "retry": "Retry",
+        "NA": "N/A",
+        "success": "Success!"
     }
 };
