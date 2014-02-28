@@ -60,7 +60,7 @@
         <td class="name"><span>{%=file.name%}</span></td>
         <td class="description"><input type="text" id="fileDescription" name="fileDescription[]" class="text-box" value="{%=file.name%}" /></td>
         <td><input type="checkbox" name="saveToCompanyDocs[]" class="text-box"/></td>
-        {% if (file.error == 'Internal Server Error') { %}
+        @*{% if (file.error == 'Internal Server Error') { %}
             {%= file.error = false %}
             {% if($("#useSignatureFile").prop('checked')){ %}
         <td class="sign-col">
@@ -83,7 +83,8 @@
                 <span>{%=locale.fileupload.retry%}</span>
             </button>
         </td>
-        {% } else if (file.error) { %}
+        {% } else if*@ 
+        {% if(file.error) { %}
             {% if($("#useSignatureFile").prop('checked')){ %}
         <td>
             {% }else{ %}
@@ -135,7 +136,13 @@
 <script id="template-download" type="text/x-tmpl">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
-        {% if(file.isSignatureFile == 'yes') { %}
+        {% if (file.error) { %}
+        <td class="name"><span>{%=file.name%}</span></td>
+        @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
+        <td class="error" colspan="3">
+            <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
+        </td>
+        {% } else if(file.isSignatureFile == 'yes') { %}
         @*mostra nada*@
         {% } else { %}
         <td class="name"><span>{%=file.name%}</span></td>
