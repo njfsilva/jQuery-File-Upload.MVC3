@@ -179,40 +179,40 @@
                             var file = data.files[index];
                             file.error = file.error || data.errorThrown ||
                                 true;
-                            that._transition($(this)).done(
-                                function () {
-                                    var node = $(this);
-                                    template = that._renderDownload([file])
-                                        .replaceAll(node);
-                                    that._forceReflow(template);
-                                    that._transition(template).done(
-                                        function () {
-                                            data.context = $(this);
-                                            that._trigger('failed', e, data);
-                                        }
-                                    );
-                                }
-                            );
                             //that._transition($(this)).done(
                             //    function () {
                             //        var node = $(this);
-                            //        var contextData = data.context.data("data");
-                            //        template = that._renderUpload([file]) //.data("data", contextData)
-                            //        .replaceAll(node);
+                            //        template = that._renderDownload([file])
+                            //            .replaceAll(node);
                             //        that._forceReflow(template);
                             //        that._transition(template).done(
-                            //        function () {
-                            //            data.context = $(this);
-                            //            that._trigger('failed', e, data);
-                            //            template.find(".start").click(function () {
-                            //                if (contextData.isValidated)
-                            //                    contextData.submit();
-                            //                return false;
-                            //            });
-                            //        }
+                            //            function () {
+                            //                data.context = $(this);
+                            //                that._trigger('failed', e, data);
+                            //            }
                             //        );
                             //    }
                             //);
+                            that._transition($(this)).done(
+                                function () {
+                                    var node = $(this);
+                                    var contextData = data.context.data("data");
+                                    template = that._renderUpload([file]) //.data("data", contextData)
+                                    .replaceAll(node);
+                                    that._forceReflow(template);
+                                    that._transition(template).done(
+                                    function () {
+                                        data.context = $(this);
+                                        that._trigger('failed', e, data);
+                                        template.find(".start").click(function () {
+                                            if (contextData.isValidated)
+                                                contextData.submit();
+                                            return false;
+                                        });
+                                    }
+                                    );
+                                }
+                            );
                         } else {
                             that._transition($(this)).done(
                                 function () {

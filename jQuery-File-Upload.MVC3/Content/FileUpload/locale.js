@@ -25,6 +25,7 @@ window.locale = {
         "destroy": "Delete",
         "retry": "Retry",
         "NA": "N/A",
-        "success": "Success!"
+        "success": "Success!",
+        "ready" : "Ready to Upload"
     }
 };

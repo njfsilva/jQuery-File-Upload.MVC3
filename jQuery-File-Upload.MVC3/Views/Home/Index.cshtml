@@ -25,11 +25,11 @@
 <form id="fileupload" action="@Url.Action("UploadFiles")" method="POST" enctype="multipart/form-data">
     <div class="row fileupload-buttonbar">
         <div class="span7">
-            <span class="btn btn-success fileinput-button">
-                <i class="icon-plus icon-white"></i>
-                <span>Add files...</span>
+            @*<span>*@@*class="btn btn-success fileinput-button"*@
+                @*<i class="icon-plus icon-white"></i>*@
+                @*<span>Add files...</span>*@
                 <input type="file" name="files[]" multiple>
-            </span>
+            @*</span>*@
             Quero usar ficheiro de assinatura
             <input type="checkbox" id="useSignatureFile" name="useSignatureFile" onchange="ToggleSignatureFiles();" />
         </div>
@@ -46,8 +46,8 @@
         <tbody class="files"></tbody>
     </table>
     <div class="pull-right fileupload-buttonbar">
-        <button type="button" class="btn btn-primary start">
-            <i class="icon-upload icon-white"></i>
+        <button type="button" class="start">
+            @*<i class="icon-upload icon-white"></i>*@
             <span>Upload</span>
         </button>
     </div>
@@ -60,8 +60,7 @@
         <td class="name"><span>{%=file.name%}</span></td>
         <td class="description"><input type="text" id="fileDescription" name="fileDescription[]" class="text-box" value="{%=file.name%}" /></td>
         <td><input type="checkbox" name="saveToCompanyDocs[]" class="text-box"/></td>
-        @*{% if (file.error == 'Internal Server Error') { %}
-            {%= file.error = false %}
+        {% if (file.error == 'Internal Server Error') { %}
             {% if($("#useSignatureFile").prop('checked')){ %}
         <td class="sign-col">
             {% }else{ %}
@@ -72,19 +71,18 @@
             <input type="hidden" name="maxChunkSize[]" value="{%= GetChunkSize() %}" />
         </td>
         <td class="error">
-            <div class="progress progress-success progress-striped active">
-                <div class="bar" style="width:0%;" />
-            </div>
             <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
+            {%= file.error = false %}
         </td>
-        <td class="start">
-            <button class="btn btn-warning">
+        <td @*class="cancel"*@>
+            {%= appendFile(o.files[i])  %}
+            <button class="btn btn-warning" type="button" onclick="Cenas(this, retryFileList[retryFileList.length-1]);">
                 <i class="icon-repeat icon-white"></i>
                 <span>{%=locale.fileupload.retry%}</span>
             </button>
         </td>
-        {% } else if*@ 
-        {% if(file.error) { %}
+        {% } else if (file.error) { %}
+        @*{% if(file.error) { %}*@
             {% if($("#useSignatureFile").prop('checked')){ %}
         <td>
             {% }else{ %}
@@ -108,7 +106,8 @@
             <input type="hidden" name="maxChunkSize[]" value="{%= GetChunkSize() %}" />
         </td>
         <td>
-            <div class="progress progress-success progress-striped active">
+            <span class="label ready">{%=locale.fileupload.ready%}</span>
+            <div class="progress progress-success progress-striped active readyProgress" style="text-align: center ; display:none">
                 <div class="bar" style="width:0%;" />
             </div>
         </td>
@@ -136,13 +135,20 @@
 <script id="template-download" type="text/x-tmpl">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
-        {% if (file.error) { %}
-        <td class="name"><span>{%=file.name%}</span></td>
+        @*{% if (file.error) { %}
+        <td class="name" colspan="3"><span>{%=file.name%}</span></td>*@
         @*<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>*@
-        <td class="error" colspan="3">
-            <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
+        @*{% if($("#useSignatureFile").prop('checked')){ %}
+        <td>
+            {% }else{ %}
+        <td class="sign-col" style="display:none">
+            {% } %}
         </td>
-        {% } else if(file.isSignatureFile == 'yes') { %}
+        <td class="error">
+            <span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}
+        </td>*@
+        @*{% } else if(file.isSignatureFile == 'yes') { %}*@
+        {% if(file.isSignatureFile == 'yes') { %}
         @*mostra nada*@
         {% } else { %}
         <td class="name"><span>{%=file.name%}</span></td>

@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
 
+    retryFileList = [];
+
     InitializeFileUploader();
 
 });
@@ -42,6 +44,48 @@ function InitializeFileUploader() {
     $('#fileupload').bind('fileuploadsubmit', function (e, data) {
         var inputs = data.context.find(':input');
         data.formData = inputs.serializeArray();
+
+        $('.ready').hide();
+        $('.readyProgress').show();
     });
-    
+
+    $('#fileupload').bind('fileuploaddone', function (e, data) {
+        alert('ACABOU!');
+    });
+}
+
+function Cenas(sender, fileToAdd) {
+
+    //var fileName = $('#fileupload').find(sender).closest('tr').find('.name').first().next().val();
+    //console.log(fileName);
+
+
+    //var indexOfFile = 0;
+
+    //for (var i = 0; i < retryFileList.length; i++) {
+    //    var file = retryFileList[i];
+    //    if (file.name == fileName){
+    //        indexOfFile = i;
+    //        break;
+    //    }
+    //}
+
+    //$('#fileupload').fileupload('add', { files: retryFileList[indexOfFile] });
+    $('#fileupload').fileupload('add', {
+        files: fileToAdd,
+        formData: $(sender).closest('tr').find(':input').serializeArray().concat([{ name: 'IsSignature', value: 'true' }]),
+        IsSignature: true,
+        OriginalFileName: $(sender).closest('tr').children('td.name').text()
+    });
+
+    //retryFileList.splice(indexOfFile, 1);
+
+    $('#fileupload').find(sender).closest('tr').remove();
+
+}
+
+function appendFile(file) {
+
+    retryFileList.push(file);
+
 }
