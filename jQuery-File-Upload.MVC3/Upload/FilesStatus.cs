@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace jQuery_File_Upload.MVC3.Upload
 {
