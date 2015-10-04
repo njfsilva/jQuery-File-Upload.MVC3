@@ -13,11 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>jQuery_File_Upload.MVC3</RootNamespace>
     <AssemblyName>jQuery-File-Upload.MVC3</AssemblyName>
-<<<<<<< HEAD
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-=======
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
->>>>>>> origin/master
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
