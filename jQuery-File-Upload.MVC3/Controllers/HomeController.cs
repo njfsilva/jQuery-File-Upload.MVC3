@@ -9,10 +9,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
 {
     public class HomeController : Controller
     {
-        private string StorageRoot
-        {
-            get { return Path.Combine(Server.MapPath("~/Files/")); }
-        }
+        private string StorageRoot => Path.Combine(Server.MapPath("~/Files/"));
 
         public ActionResult Index()
         {
@@ -58,27 +55,23 @@ namespace jQuery_File_Upload.MVC3.Controllers
         {
             var r = new List<ViewDataUploadFilesResult>();
 
-            foreach (string file in Request.Files)
+            if (!Request.Files.Cast<object>().Any()) return Json(r);
+            var statuses = new List<ViewDataUploadFilesResult>();
+            var headers = Request.Headers;
+
+            if (string.IsNullOrEmpty(headers["X-File-Name"]))
             {
-                var statuses = new List<ViewDataUploadFilesResult>();
-                var headers = Request.Headers;
-
-                if (string.IsNullOrEmpty(headers["X-File-Name"]))
-                {
-                    UploadWholeFile(Request, statuses);
-                }
-                else
-                {
-                    UploadPartialFile(headers["X-File-Name"], Request, statuses);
-                }
-
-                var result = Json(statuses);
-                result.ContentType = "text/plain";
-
-                return result;
+                UploadWholeFile(Request, statuses);
+            }
+            else
+            {
+                UploadPartialFile(headers["X-File-Name"], Request, statuses);
             }
 
-            return Json(r);
+            var result = Json(statuses);
+            result.ContentType = "text/plain";
+
+            return result;
         }
 
         private void UploadPartialFile(string fileName, HttpRequestBase request, ICollection<ViewDataUploadFilesResult> statuses)
@@ -98,7 +91,9 @@ namespace jQuery_File_Upload.MVC3.Controllers
                 var maxChunkSize = Convert.ToInt64(request.Form["maxChunkSize[]"].Split(',').Last());
                 var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
                 var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
-                var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE!!!!!!!
+                var saveToCompanyDocs = request.Form["saveToCompanyDocs[]"] != null && request.Form["saveToCompanyDocs[]"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                
+                var last = fileStreamFromRequest.Length < maxChunkSize; //FUCK THIS LINE OF CODE IN PARTICULAR!!!!!!!
 
                 using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
                 {
@@ -108,7 +103,7 @@ namespace jQuery_File_Upload.MVC3.Controllers
 
                 if (last)
                 {
-
+                    //cenas e tal
                 }
 
                 statuses.Add(new ViewDataUploadFilesResult
@@ -121,40 +116,42 @@ namespace jQuery_File_Upload.MVC3.Controllers
                     url = string.Empty,
                     delete_url = string.Empty,
                     delete_type = "GET",
-                    isSignatureFile = isSignatureFile ? "yes" : "no"
+                    isSignatureFile = isSignatureFile ? "yes" : "no",
+                    saveToCompanyDocs = saveToCompanyDocs ? "Yes" : "No"
                 });
             }
         }
 
-        private void UploadWholeFile(HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
+        private void UploadWholeFile(HttpRequestBase request, ICollection<ViewDataUploadFilesResult> statuses)
         {
-            for (int i = 0; i < request.Files.Count; i++)
+            for (var i = 0; i < request.Files.Count; i++)
             {
                 var file = request.Files[i];
 
-                if (file != null && file.FileName != null)
+                if (file?.FileName == null) continue;
+
+                var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
+
+                var fileDescription = request.Form["fileDescription[]"].Split(',').Last();
+                var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
+                var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+                var saveToCompanyDocs = request.Form["saveToCompanyDocs[]"] != null && request.Form["saveToCompanyDocs[]"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
+
+                file.SaveAs(fullPath);
+
+                statuses.Add(new ViewDataUploadFilesResult
                 {
-                    var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
-
-                    var fileDescription = request.Form["fileDescription[]"].Split(',').Last();
-                    var associatedSignatureFile = request.Form["certificateFileName[]"].Split(',').Last();
-                    var isSignatureFile = request.Form["useSignatureFile"] != null && request.Form["useSignatureFile"].Equals("on"); //este argumento so vem no envio do ficheiro de assinatura, nos normais nao
-
-                    file.SaveAs(fullPath);
-
-                    statuses.Add(new ViewDataUploadFilesResult()
-                    {
-                        name = file.FileName,
-                        size = file.ContentLength,
-                        type = file.ContentType,
-                        description = fileDescription,
-                        associatedSignatureFile = associatedSignatureFile,
-                        url = string.Empty,
-                        delete_url = string.Empty,
-                        delete_type = "GET",
-                        isSignatureFile = isSignatureFile ? "yes" : "no"
-                    });
-                }
+                    name = file.FileName,
+                    size = file.ContentLength,
+                    type = file.ContentType,
+                    description = fileDescription,
+                    associatedSignatureFile = associatedSignatureFile,
+                    url = string.Empty,
+                    delete_url = string.Empty,
+                    delete_type = "GET",
+                    isSignatureFile = isSignatureFile ? "yes" : "no",
+                    saveToCompanyDocs = saveToCompanyDocs ? "Yes" : "No"
+                });
             }
         }
     }
@@ -171,5 +168,6 @@ namespace jQuery_File_Upload.MVC3.Controllers
         public string thumbnail_url { get; set; }
         public string delete_type { get; set; }
         public string isSignatureFile { get; set; }
+        public string saveToCompanyDocs { get; set; }
     }
 }
